@@ -10,9 +10,7 @@ class NewExpense extends StatefulWidget {
   final void Function(Expense expense) onAddExpense;
 
   @override
-  State<NewExpense> createState() {
-    return _NewExpenseState();
-  }
+  State<NewExpense> createState() => _NewExpenseState();
 }
 
 class _NewExpenseState extends State<NewExpense> {
@@ -40,13 +38,11 @@ class _NewExpenseState extends State<NewExpense> {
           context: context,
           builder: (ctx) => CupertinoAlertDialog(
             title: const Text('Invalid Input!'),
-            content: const Text(
-                'Please enter a valid title, amount, and date.'),
+            content:
+                const Text('Please enter a valid title, amount, and date.'),
             actions: [
               TextButton(
-                onPressed: () {
-                  Navigator.pop(ctx);
-                },
+                onPressed: () => Navigator.pop(ctx),
                 child: const Text('Okay'),
               ),
             ],
@@ -57,13 +53,11 @@ class _NewExpenseState extends State<NewExpense> {
           context: context,
           builder: (ctx) => AlertDialog(
             title: const Text('Invalid Input!'),
-            content: const Text(
-                'Please enter a valid title, amount, and date.'),
+            content:
+                const Text('Please enter a valid title, amount, and date.'),
             actions: [
               TextButton(
-                onPressed: () {
-                  Navigator.pop(ctx);
-                },
+                onPressed: () => Navigator.pop(ctx),
                 child: const Text('Okay'),
               ),
             ],
@@ -153,9 +147,11 @@ class _NewExpenseState extends State<NewExpense> {
                         label: Text('Title'),
                       ),
                     ),
-                  if (width < 600)
-                    Row(
-                      children: [
+                  const SizedBox(height: 16),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      if (width < 600)
                         Expanded(
                           child: TextField(
                             controller: _amountController,
@@ -166,25 +162,27 @@ class _NewExpenseState extends State<NewExpense> {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                _selectedDate == null
-                                    ? 'No date selected'
-                                    : formatter.format(_selectedDate!),
-                              ),
-                              IconButton(
-                                onPressed: _presentDatePicker,
-                                icon: const Icon(Icons.calendar_month),
-                              ),
-                            ],
-                          ),
+                      if (width < 600) const SizedBox(width: 16),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: width < 600
+                              ? MainAxisAlignment.end
+                              : MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              _selectedDate == null
+                                  ? 'No date selected'
+                                  : formatter.format(_selectedDate!),
+                            ),
+                            IconButton(
+                              onPressed: _presentDatePicker,
+                              icon: const Icon(Icons.calendar_month),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 20),
                   Row(
                     children: [
@@ -195,7 +193,7 @@ class _NewExpenseState extends State<NewExpense> {
                               (category) => DropdownMenuItem(
                                 value: category,
                                 child: Text(
-                                  category.name.toString().toUpperCase(),
+                                  category.name.toUpperCase(),
                                 ),
                               ),
                             )
@@ -209,11 +207,10 @@ class _NewExpenseState extends State<NewExpense> {
                       ),
                       const Spacer(),
                       ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+                        onPressed: () => Navigator.pop(context),
                         child: const Text('Cancel'),
                       ),
+                      const SizedBox(width: 8),
                       ElevatedButton(
                         onPressed: _submitExpenseData,
                         child: const Text('Save Expense'),
